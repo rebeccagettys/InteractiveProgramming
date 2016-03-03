@@ -54,23 +54,61 @@ class model(object):
             return self.number # do I need to return this
 
 class controller (object):
-    """ This is the controlled where user input (arrow keys or openCV) changes the model"""
+    def main_controller (object):
+        """ This is the controlled where user input (arrow keys or openCV) changes the model"""
+        # code in this section HEAVILY modified and extended from http://www.nerdparadise.com/tech/python/pygame/basics/part6/
+        # also documentation here: http://www.pygame.org/docs/ref/key.html
+        while True:
+
+            for event in pygame.event.get():
+
+                # determin if X was clicked, or Ctrl+W or Alt+F4 was used
+                if event.type == pygame.QUIT:
+                    return
+                if event.type == pygame.KEYDOWN:# if a key has been pressed
+                    if event.key == pygame.K_UP:
+                        print 'up'
+                        #model.pacman.y = model.pacman.y + 1
+                    if event.key == pygame.K_DOWN:
+                        print 'down'
+                        #model.pacman.y = model.pacman.y - 1
+                    if event.key == pygame.K_LEFT:
+                        print 'left'
+                        #model.pacman.x = model.pacman.x - 1
+                    if event.key == pygame.K_RIGHT:
+                        print 'right'
+                        #model.pacman.y = model.pacman.x + 1
+
+                # determine if a letter key was pressed
+                #if event.key == pygame.K_r:
+                #    mode = 'red'
+                #elif event.key == pygame.K_g:
+                #    mode = 'green'
+                #elif event.key == pygame.K_b:
+                #    mode = 'blue'
 
 class pygameview (object):
-    """ This is the game window drawing all of the things that the user seems in response to the changes in the model"""
+#    """ This is the game window drawing all of the things that the user seems in response to the changes in the model"""
 
-def drawGameFrame(boxx, boxy)
-    lef, top = boxCoordinates(boxx,boxy)
-    pygame.draw.rect(DISPLAY, RED, (left-5, top = 5, (60,60), (60,60)))
+#def drawGameFrame(boxx, boxy)
+#    lef, top = boxCoordinates(boxx,boxy)
+#    pygame.draw.rect(DISPLAY, RED, (left-5, top = 5, (60,60), (60,60)))
 
-pygame.init()
-DISPLAY = pygame.display.set_mode((400, 300))
-pygame.display.set_caption('Hello Pygame!')
+#def testing123 ():
+    pygame.init()
+    display = pygame.display.set_mode([640, 600])
+    red = (230,50,50)
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
-                sys.exit
+    window.fill((40,50,180))
+    pygame.draw.rect(display, (red), Rect(100,300), (20,30))
+    pygame.display.update()
 
 
     #     screen.blt(background, (0,0))
+
+
+controller.main_controller()
+testing123()
