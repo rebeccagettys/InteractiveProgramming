@@ -111,4 +111,4 @@ class pygameview (object):
 
 
 controller.main_controller()
-testing123()
+#testing123()
