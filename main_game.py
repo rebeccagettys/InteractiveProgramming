@@ -24,7 +24,7 @@ class model(object):
             self.length = length
 
     class pacman(object):
-        """ This is our pacman who dies from ghosts and eats balls!"""
+        """ Tis is our pacman who dies from ghosts and eats balls!"""
         def __init__(self, x, y, lives):
             self.x = x
             self.y = y
