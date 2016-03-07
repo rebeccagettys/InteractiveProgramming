@@ -5,10 +5,15 @@ import random
 bif = 'background_3.png'
 mif = 'arrow-small-right.png'
 
+WIDTH = 500
+HEIGHT = 500 
+
 class model(object):
     """This is he model that stores the game state """
-    def __init__ (self, ball, pacman): 
+    def __init__ (self, ball, ball2, ball3, pacman): 
         self.ball = ball
+        self.ball2 = ball2 
+        self.ball3 = ball3 
         self.pacman = pacman
         self.point = point 
 
@@ -16,7 +21,11 @@ class model(object):
         # self.ball = ball #sets the ball equal to the equation that defines it 
         # self.pacman = pacman #Defines the pacman by its equation. 
         self.ball.update(self.pacman) #Updates each character each round (?)
+        #self.update(self.ball) #Updates each character each round (?)
+
         # self.point = point
+        self.ball2.update(self.pacman)
+        self.ball3.update(self.pacman)
 
 
 class pacman(object):
@@ -39,7 +48,44 @@ class ball (object):
     def update (self, pacman):
 
         if self.x == pacman.x and self.y == pacman.y:
-           self.radius = 0 #todo: when pacman eats me, disappear 
+            self.x = random.choice(range(0, WIDTH, 10))
+            self.y = random.choice(range(0, HEIGHT, 10)) 
+
+           #todo: when pacman eats me, disappear 
+           #More specifically, when the Pacman is the same 
+
+class ball2 (object):
+    """this is the ball that pacman eats and scores points by eating!"""
+
+    def __init__ (self, x, y, radius): #Another circle defining the 
+        self.x = x
+        self.y = y
+        self.radius = radius 
+
+    def update (self, pacman):
+
+        if self.x == pacman.x and self.y == pacman.y:
+            self.x = random.choice(range(0, WIDTH, 10))
+            self.y = random.choice(range(0, HEIGHT, 10)) 
+
+           #todo: when pacman eats me, disappear 
+           #More specifically, when the Pacman is the same 
+
+class ball3 (object):
+    """this is the ball that pacman eats and scores points by eating!"""
+
+    def __init__ (self, x, y, radius): #Another circle defining the 
+        self.x = x
+        self.y = y
+        self.radius = radius 
+
+    def update (self, pacman):
+
+        if self.x == pacman.x and self.y == pacman.y:
+            self.x = random.choice(range(0, WIDTH, 10))
+            self.y = random.choice(range(0, HEIGHT, 10)) 
+
+           #todo: when pacman eats me, disappear 
            #More specifically, when the Pacman is the same 
 
 class point(object):
@@ -69,17 +115,60 @@ class game_controller (object):
         if event.type == pygame.KEYDOWN:
         #If ___ key is pressed something is added or subtracted to one of the axis. 
             if event.key == pygame.K_UP:
-                #print 'up'
-                model.pacman.y = model.pacman.y - 10 #For example, going up is going in a positive direction in the y axis (by 1 for 1 press of the key.)
+                if model.pacman.y == 0:
+                    model.pacman.y = model.pacman.y
+                else:
+                    model.pacman.y = model.pacman.y - 10 #For example, going up is going in a positive direction in the y axis (by 1 for 1 press of the key.)
+
+
             if event.key == pygame.K_DOWN:
-                #print 'down'
-                model.pacman.y = model.pacman.y + 10
+                if model.pacman.y == HEIGHT:
+                    model.pacman.y = model.pacman.y
+                else:
+                    model.pacman.y = model.pacman.y + 10
+
             if event.key == pygame.K_LEFT:
-                #print 'left'
-                model.pacman.x = model.pacman.x - 10
+                if model.pacman.x == 0:
+                    model.pacman.x = model.pacman.x
+                else:
+                    model.pacman.x = model.pacman.x - 10
+
             if event.key == pygame.K_RIGHT:
-                #print 'right'
-                model.pacman.x = model.pacman.x + 10
+                   if model.pacman.x == WIDTH:
+                        model.pacman.x = model.pacman.x
+                   else:
+                        model.pacman.x = model.pacman.x + 10
+
+
+# class game_controller (object):
+#     def __init__(self,model):
+#         self.model = model #Creating a model. (What's that? Just an overarching structure?)
+#     def handle_event (self, event):
+#         """ This is the controlled where user input (arrow keys or openCV) changes the model"""
+#         # code in this section HEAVILY modified and extended from http://www.nerdparadise.com/tech/python/pygame/basics/part6/
+#         # also documentation here: http://www.pygame.org/docs/ref/key.html
+#         #while True:
+
+#         #for event in pygame.event.get():
+
+#         # determine if X was clicked, or Ctrl+W or Alt+F4 was used
+#         if event.type == pygame.QUIT:
+#             return
+#         #If the game quits, none of the below happen. 
+#         if event.type == pygame.KEYDOWN:
+#         #If ___ key is pressed something is added or subtracted to one of the axis. 
+#             if event.key == pygame.K_UP:
+#                 #print 'up'
+#                 model.pacman.y = model.pacman.y - 10 #For example, going up is going in a positive direction in the y axis (by 1 for 1 press of the key.)
+#             if event.key == pygame.K_DOWN:
+#                 #print 'down'
+#                 model.pacman.y = model.pacman.y + 10
+#             if event.key == pygame.K_LEFT:
+#                 #print 'left'
+#                 model.pacman.x = model.pacman.x - 10
+#             if event.key == pygame.K_RIGHT:
+#                 #print 'right'
+#                 model.pacman.x = model.pacman.x + 10
 
 
 class pygameview (object):
@@ -97,7 +186,7 @@ class pygameview (object):
         #This sequence draws pacman onto the screen with the dimensions we gave earlier.
 
         pygame.draw.circle(self.screen,
-                           (255, 0, 0),
+                           (255, 255, 0),
                            (self.model.pacman.x, self.model.pacman.y),
                            self.model.pacman.radius)
 
@@ -109,6 +198,18 @@ class pygameview (object):
                         self.model.ball.y), 
                         self.model.ball.radius) 
 
+        pygame.draw.circle(self.screen, 
+                        (0, 0, 255),
+                        (self.model.ball2.x,
+                        self.model.ball2.y), 
+                        self.model.ball2.radius) 
+
+        pygame.draw.circle(self.screen, 
+                        (0, 0, 255),
+                        (self.model.ball3.x,
+                        self.model.ball3.y), 
+                        self.model.ball3.radius) 
+
         pygame.display.update()
 
 if __name__ == '__main__':
@@ -116,11 +217,11 @@ if __name__ == '__main__':
     # This part starts the display and loads the background. 
     pygame.init()
     # pygame.display.init()
-    screen = pygame.display.set_mode([1000,1000]) #Starting the display using bif and mif
+    screen = pygame.display.set_mode([WIDTH,HEIGHT]) #Starting the display using bif and mif
     # background = pygame.image.load(bif).convert()
     # mouse_c= pygame.image.load(mif).convert_alpha()
-   
-    model = model(ball(50,50,50), pacman(60, 70, 50))
+    
+    model = model(ball(50, 100,10), ball2(300, 200, 15), ball3(50, 200, 20), pacman(60, 70, 50))
     view = pygameview(model, screen)
     controller = game_controller(model)
 
