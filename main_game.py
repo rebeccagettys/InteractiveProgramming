@@ -21,13 +21,12 @@ class model(object):
     def update(self):
         # self.ball = ball #sets the ball equal to the equation that defines it
         # self.pacman = pacman #Defines the pacman by its equation.
-        self.ball.update(self.pacman) #Updates each character each round (?)
-        #self.update(self.ball) #Updates each character each round (?)
+         #self.update(self.ball) #Updates each character each round (?)
 
         # self.point = point
-
-        #self.ball2.update(self.pacman)
-        #self.ball3.update(self.pacman)
+        self.ball.update(self.pacman) #Updates each character each round (?)
+        self.ball2.update(self.pacman)
+        self.ball3.update(self.pacman)
 
 
 class pacman(object):
