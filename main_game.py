@@ -158,9 +158,9 @@ class pygameview (object):
         """ Draw the game to the pygame window """
         # draw all the bricks to the screen
         self.screen.fill(pygame.Color('white'))
-        background = pygame.Surface(screen.get_size())
-        background = background.convert()
-        background.fill((250, 250, 250))
+        background = pygame.Surface(screen.get_size()) #this is just making a surface because we have to do this uncool thing called blitting to make the text show
+        background = background.convert() #increases speed
+        background.fill((255, 255, 255)) #needs to match color
 
         #This sequence draws pacman onto the screen with the dimensions we gave earlier.
 
@@ -191,10 +191,12 @@ class pygameview (object):
 
         # Display some text #http://www.pygame.org/docs/tut/tom/games2.html
         font = pygame.font.Font(None, 36)
-        text = font.render('this should be point.show', 1, (0, 0, 0))
+        text = font.render(point.show(points_earned), 1, (0, 0, 0))
         textpos = text.get_rect()
         textpos.centerx = WIDTH - 300
         background.blit(text, textpos)
+        screen.blit(background, (0, 0))
+
 
 
         pygame.display.update()
@@ -209,8 +211,13 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode([WIDTH,HEIGHT]) #Starting the display using bif and mif
     # background = pygame.image.load(bif).convert()
     # mouse_c= pygame.image.load(mif).convert_alpha()
-    
-    model = model(ball(50, 100,10), ball2(300, 200, 15), ball3(50, 200, 20), pacman(60, 70, 50), point(0))
+    first_ball = ball(50, 100,10)
+    second_ball = ball2(300, 200, 15)
+    third_ball =  ball3(50, 200, 20)
+    actual_pacman = pacman(60, 70, 50)
+    points_earned = point(0)
+    #model = model(ball(50, 100,10), ball2(300, 200, 15), ball3(50, 200, 20), pacman(60, 70, 50), point(0))
+    model = model(first_ball,second_ball,third_ball,actual_pacman,points_earned)
     view = pygameview(model, screen)
     controller = game_controller(model)
 
