@@ -25,8 +25,9 @@ class model(object):
         #self.update(self.ball) #Updates each character each round (?)
 
         # self.point = point
-        self.ball2.update(self.pacman)
-        self.ball3.update(self.pacman)
+
+        #self.ball2.update(self.pacman)
+        #self.ball3.update(self.pacman)
 
 
 class pacman(object):
@@ -41,10 +42,11 @@ class pacman(object):
 class ball (object):
     """this is the ball that pacman eats and scores points by eating!"""
 
-    def __init__ (self, x, y, radius): #Another circle defining the
+    def __init__ (self, x, y, radius,color): #Another circle defining the
         self.x = x
         self.y = y
         self.radius = radius
+        self.color = color
 
     def update (self, pacman):
 
@@ -215,9 +217,9 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode([WIDTH,HEIGHT]) #Starting the display using bif and mif
     # background = pygame.image.load(bif).convert()
     # mouse_c= pygame.image.load(mif).convert_alpha()
-    first_ball = ball(50, 100,10)
-    second_ball = ball(300, 200, 15)
-    third_ball =  ball(50, 200, 20)
+    first_ball = ball(50, 100,10, pygame.Color('blue'))
+    second_ball = ball(300, 200, 15,pygame.Color('green') )
+    third_ball =  ball(50, 200, 20,pygame.Color('red'))
     actual_pacman = pacman(60, 70, 50)
     points_earned = point(0)
     #model = model(ball(50, 100,10), ball2(300, 200, 15), ball3(50, 200, 20), pacman(60, 70, 50), point(0))
