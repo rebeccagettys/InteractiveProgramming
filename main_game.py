@@ -41,11 +41,12 @@ class pacman(object):
 class ball (object):
     """this is the ball that pacman eats and scores points by eating!"""
 
-    def __init__ (self, x, y, radius,color): #Another circle defining the
+    def __init__ (self, x, y, radius,color, value): #Another circle defining the
         self.x = x
         self.y = y
         self.radius = radius
         self.color = color
+        self.value = value
 
     def update (self, pacman):
 
@@ -55,43 +56,6 @@ class ball (object):
             point.add_point(points_earned)
 
 
-           #More specifically, when the Pacman is the same
-
-#class ball2 (object):
- #   """this is the ball that pacman eats and scores points by eating!"""
-#
- #   def __init__ (self, x, y, radius): #Another circle defining the
-  #      self.x = x
-   #     self.y = y
-    #    self.radius = radius
-
-    #def update (self, pacman):
-#
- #       if self.x == pacman.x and self.y == pacman.y:
-  #          self.x = random.choice(range(0, WIDTH, 10))
-   #         self.y = random.choice(range(0, HEIGHT, 10))
-    #        point.add_point(points_earned)
-
-
-           #More specifically, when the Pacman is the same
-
-#class ball3 (object):
-#    """this is the ball that pacman eats and scores points by eating!"""
-#
-#    def __init__ (self, x, y, radius): #Another circle defining the
-#        self.x = x
- #       self.y = y
- #       self.radius = radius
-
-  #  def update (self, pacman):
-#
- #       if self.x == pacman.x and self.y == pacman.y:
-  #          self.x = random.choice(range(0, WIDTH, 10))
-   #         self.y = random.choice(range(0, HEIGHT, 10))
-    #        point.add_point(points_earned)
-
-
-           #More specifically, when the Pacman is the same
 
 class point(object):
     """ this is what you earn when you collect the point rectangle :)"""
@@ -177,19 +141,19 @@ class pygameview (object):
         #This draws a dot (we want several, though, right?)
 
         pygame.draw.circle(background,
-                        (0, 0, 255),
+                        first_ball.color,
                         (first_ball.x,
                         first_ball.y),
                         first_ball.radius)
 
         pygame.draw.circle(background, #kill screen use background
-                        (0, 0, 255),
+                        second_ball.color,
                         (second_ball.x,
                         second_ball.y),
                         second_ball.radius)
 
         pygame.draw.circle(background,
-                        (0, 0, 255),
+                        third_ball.color,
                         (third_ball.x,
                         third_ball.y),
                         third_ball.radius)
@@ -216,9 +180,9 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode([WIDTH,HEIGHT]) #Starting the display using bif and mif
     # background = pygame.image.load(bif).convert()
     # mouse_c= pygame.image.load(mif).convert_alpha()
-    first_ball = ball(50, 100,10, pygame.Color('blue'))
-    second_ball = ball(300, 200, 15,pygame.Color('green') )
-    third_ball =  ball(50, 200, 20,pygame.Color('red'))
+    first_ball = ball(50, 100,10, pygame.Color('blue'),5)
+    second_ball = ball(300, 200, 15,pygame.Color('green'),10)
+    third_ball =  ball(50, 200, 20,pygame.Color('red'),15)
     actual_pacman = pacman(60, 70, 50)
     points_earned = point(0)
     #model = model(ball(50, 100,10), ball2(300, 200, 15), ball3(50, 200, 20), pacman(60, 70, 50), point(0))
