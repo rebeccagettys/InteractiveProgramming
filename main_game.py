@@ -149,10 +149,11 @@ class game_controller (object):
 
 class pygameview (object):
     """ Provides a view of the pacman model in a pygame window """
-    def __init__(self, model, screen):
+    def __init__(self, model, screen):#background
         """ Initialize with the specified model """
         self.model = model # The model is a model.
         self.screen = screen #The display is equal to the function that define's it's results
+        #self.background = background
 
     def draw(self):
         """ Draw the game to the pygame window """
@@ -164,26 +165,26 @@ class pygameview (object):
 
         #This sequence draws pacman onto the screen with the dimensions we gave earlier.
 
-        pygame.draw.circle(self.screen,
+        pygame.draw.circle(background,
                            (255, 255, 0),
                            (self.model.pacman.x, self.model.pacman.y),
                            self.model.pacman.radius)
 
         #This draws a dot (we want several, though, right?)
 
-        pygame.draw.circle(self.screen,
+        pygame.draw.circle(background,
                         (0, 0, 255),
                         (self.model.ball.x,
                         self.model.ball.y),
                         self.model.ball.radius)
 
-        pygame.draw.circle(self.screen,
+        pygame.draw.circle(background, #kill screen use background
                         (0, 0, 255),
                         (self.model.ball2.x,
                         self.model.ball2.y),
                         self.model.ball2.radius)
 
-        pygame.draw.circle(self.screen,
+        pygame.draw.circle(background,
                         (0, 0, 255),
                         (self.model.ball3.x,
                         self.model.ball3.y),
