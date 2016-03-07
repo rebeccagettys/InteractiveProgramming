@@ -35,11 +35,11 @@ class pacman(object):
         self.x = x #center coordinates/dimensions defining the pacman shape
         self.y = y
         self.radius = radius
-        #Liv: Is pacman currently a ball? Should we make him into a sprite?
 
 
 class ball (object):
     """this is the ball that pacman eats and scores points by eating!"""
+    #POINTS_EARNED
 
     def __init__ (self, x, y, radius,color, value): #Another circle defining the
         self.x = x
@@ -53,21 +53,24 @@ class ball (object):
         if self.x == pacman.x and self.y == pacman.y:
             self.x = random.choice(range(0, WIDTH, 10))
             self.y = random.choice(range(0, HEIGHT, 10))
-            point.add_point(points_earned)
+            #point.add_point(points_earned)
+            #global POINTS_EARNED
+            #POINTS_EARNED = POINTS_EARNED + int(self.value)
+            model.point = model.point + int(self.value)
 
 
-
-class point(object):
-    """ this is what you earn when you collect the point rectangle :)"""
-    def __init__ (self,number):
-        self.number = number # Making an initial number.
-    def add_point(self):
-        self.number = self.number + 1 #Adding to this
-        #(and making a function out of it so we can use it later independently of the class.)
-        return self.number # do I need to return this
-    def show(self):
-        point_string = str(self.number)
-        return point_string
+#class point(object):
+#    """ this is what you earn when you collect the point rectangle :)"""
+#    def __init__ (self,number):
+#        self.number = number # Making an initial number.
+#        self.ball = ball
+#    def add_point(self):
+#        self.number = self.number + 1 #Adding to this
+#        #(and making a function out of it so we can use it later independently of the class.)
+#        return self.number # do I need to return this
+#    def show(self):
+#        point_string = str(self.number)
+#        return point_string
 
 class game_controller (object):
     def __init__(self,model):
@@ -160,7 +163,7 @@ class pygameview (object):
 
         # Display some text #http://www.pygame.org/docs/tut/tom/games2.html
         font = pygame.font.Font(None, 36)
-        text = font.render(point.show(points_earned), 1, (0, 0, 0))
+        text = font.render(str(model.point), 1, (0, 0, 0)) #point.show(points_earned)
         textpos = text.get_rect()
         textpos.centerx = WIDTH - 300
         background.blit(text, textpos)
@@ -184,9 +187,9 @@ if __name__ == '__main__':
     second_ball = ball(300, 200, 15,pygame.Color('green'),10)
     third_ball =  ball(50, 200, 20,pygame.Color('red'),15)
     actual_pacman = pacman(60, 70, 50)
-    points_earned = point(0)
+
     #model = model(ball(50, 100,10), ball2(300, 200, 15), ball3(50, 200, 20), pacman(60, 70, 50), point(0))
-    model = model(first_ball,second_ball,third_ball,actual_pacman,points_earned)
+    model = model(first_ball,second_ball,third_ball,actual_pacman,0)
     view = pygameview(model, screen)
     controller = game_controller(model)
 
