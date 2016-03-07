@@ -170,28 +170,28 @@ class pygameview (object):
 
         pygame.draw.circle(background,
                            (255, 255, 0),
-                           (self.model.pacman.x, self.model.pacman.y),
-                           self.model.pacman.radius)
+                           (actual_pacman.x, actual_pacman.y),
+                           actual_pacman.radius)
 
         #This draws a dot (we want several, though, right?)
 
         pygame.draw.circle(background,
                         (0, 0, 255),
-                        (self.model.ball.x,
-                        self.model.ball.y),
-                        self.model.ball.radius)
+                        (first_ball.x,
+                        first_ball.y),
+                        first_ball.radius)
 
         pygame.draw.circle(background, #kill screen use background
                         (0, 0, 255),
-                        (self.model.ball2.x,
-                        self.model.ball2.y),
-                        self.model.ball2.radius)
+                        (second_ball.x,
+                        second_ball.y),
+                        second_ball.radius)
 
         pygame.draw.circle(background,
                         (0, 0, 255),
-                        (self.model.ball3.x,
-                        self.model.ball3.y),
-                        self.model.ball3.radius)
+                        (third_ball.x,
+                        third_ball.y),
+                        third_ball.radius)
 
         # Display some text #http://www.pygame.org/docs/tut/tom/games2.html
         font = pygame.font.Font(None, 36)
