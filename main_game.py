@@ -39,7 +39,7 @@ class ball (object):
     def update (self, pacman):
 
         if self.x == pacman.x and self.y == pacman.y:
-           pass #todo: when pacman eats me, disappear 
+           self.radius = 0 #todo: when pacman eats me, disappear 
            #More specifically, when the Pacman is the same 
 
 class point(object):
@@ -120,7 +120,7 @@ if __name__ == '__main__':
     # background = pygame.image.load(bif).convert()
     # mouse_c= pygame.image.load(mif).convert_alpha()
    
-    model = model(ball(50,50,50), pacman(60 , 70, 50))
+    model = model(ball(50,50,50), pacman(60, 70, 50))
     view = pygameview(model, screen)
     controller = game_controller(model)
 
