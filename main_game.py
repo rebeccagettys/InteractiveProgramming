@@ -51,42 +51,45 @@ class ball (object):
         if self.x == pacman.x and self.y == pacman.y:
             self.x = random.choice(range(0, WIDTH, 10))
             self.y = random.choice(range(0, HEIGHT, 10))
+            point.add_point(points_earned)
 
-           #todo: when pacman eats me, disappear
+
            #More specifically, when the Pacman is the same
 
-class ball2 (object):
-    """this is the ball that pacman eats and scores points by eating!"""
+#class ball2 (object):
+ #   """this is the ball that pacman eats and scores points by eating!"""
+#
+ #   def __init__ (self, x, y, radius): #Another circle defining the
+  #      self.x = x
+   #     self.y = y
+    #    self.radius = radius
 
-    def __init__ (self, x, y, radius): #Another circle defining the
-        self.x = x
-        self.y = y
-        self.radius = radius
+    #def update (self, pacman):
+#
+ #       if self.x == pacman.x and self.y == pacman.y:
+  #          self.x = random.choice(range(0, WIDTH, 10))
+   #         self.y = random.choice(range(0, HEIGHT, 10))
+    #        point.add_point(points_earned)
 
-    def update (self, pacman):
 
-        if self.x == pacman.x and self.y == pacman.y:
-            self.x = random.choice(range(0, WIDTH, 10))
-            self.y = random.choice(range(0, HEIGHT, 10))
-
-           #todo: when pacman eats me, disappear
            #More specifically, when the Pacman is the same
 
-class ball3 (object):
-    """this is the ball that pacman eats and scores points by eating!"""
+#class ball3 (object):
+#    """this is the ball that pacman eats and scores points by eating!"""
+#
+#    def __init__ (self, x, y, radius): #Another circle defining the
+#        self.x = x
+ #       self.y = y
+ #       self.radius = radius
 
-    def __init__ (self, x, y, radius): #Another circle defining the
-        self.x = x
-        self.y = y
-        self.radius = radius
+  #  def update (self, pacman):
+#
+ #       if self.x == pacman.x and self.y == pacman.y:
+  #          self.x = random.choice(range(0, WIDTH, 10))
+   #         self.y = random.choice(range(0, HEIGHT, 10))
+    #        point.add_point(points_earned)
 
-    def update (self, pacman):
 
-        if self.x == pacman.x and self.y == pacman.y:
-            self.x = random.choice(range(0, WIDTH, 10))
-            self.y = random.choice(range(0, HEIGHT, 10))
-
-           #todo: when pacman eats me, disappear
            #More specifically, when the Pacman is the same
 
 class point(object):
@@ -213,8 +216,8 @@ if __name__ == '__main__':
     # background = pygame.image.load(bif).convert()
     # mouse_c= pygame.image.load(mif).convert_alpha()
     first_ball = ball(50, 100,10)
-    second_ball = ball2(300, 200, 15)
-    third_ball =  ball3(50, 200, 20)
+    second_ball = ball(300, 200, 15)
+    third_ball =  ball(50, 200, 20)
     actual_pacman = pacman(60, 70, 50)
     points_earned = point(0)
     #model = model(ball(50, 100,10), ball2(300, 200, 15), ball3(50, 200, 20), pacman(60, 70, 50), point(0))
