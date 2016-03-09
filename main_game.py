@@ -1,8 +1,6 @@
 import pygame
 import time
 import random
-from timeit import default_timer as timer
-
 
 
 WIDTH = 500
@@ -136,7 +134,7 @@ class PyGameView (object):
                            (actual_pacman.x, actual_pacman.y),
                            actual_pacman.radius)
 
-        #This draws a dot (we want several, though, right?)
+        #This draws each point ball
 
         pygame.draw.circle(background,
                         first_ball.color,
@@ -144,7 +142,7 @@ class PyGameView (object):
                         first_ball.y),
                         first_ball.radius)
 
-        pygame.draw.circle(background, #kill screen use background
+        pygame.draw.circle(background,
                         second_ball.color,
                         (second_ball.x,
                         second_ball.y),
@@ -158,7 +156,7 @@ class PyGameView (object):
 
         # Display some text #http://www.pygame.org/docs/tut/tom/games2.html
         font = pygame.font.Font(None, 36)
-        text = font.render(str(model.point), 1, (0, 0, 0)) #point.show(points_earned)
+        text = font.render(str(model.point), 1, (0, 0, 0))
         textpos = text.get_rect()
         textpos.centerx = WIDTH - 300
         background.blit(text, textpos)
