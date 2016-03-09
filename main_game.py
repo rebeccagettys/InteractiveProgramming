@@ -6,6 +6,8 @@ import random
 WIDTH = 500
 HEIGHT = 500
 STEPSIZE = 10
+END_TIME = 60
+
 
 class Model(object):
     """This is the model that stores the game state. It includes the objects such as the balls (points to be "eaten"),
@@ -23,6 +25,16 @@ class Model(object):
         self.ball3 = ball3
         self.pacman = pacman
         self.point = point
+        self.clock = pygame.time.Clock
+        self.running = True
+
+    def run_time(self):
+       game_time = pygame.time.get_ticks()/1000
+       t = END_TIME - game_time
+       if game_time > END_TIME:
+           self.running = False
+           t = 0
+       return t
 
     def update(self):
         """  Updates each of the balls in relation to pacman each time the main game loop is run."""
@@ -121,46 +133,73 @@ class PyGameView (object):
 
     def draw(self):
         """ Draw the game objects (balls, point counter, pacman) on the pygame window. """
+ # draw all the bricks to the screen
+        if not self.model.running:
 
-        self.screen.fill(pygame.Color('white'))
-        background = pygame.Surface(screen.get_size()) #this is just making a surface because we have to do this uncool thing called blitting to make the text show
-        background = background.convert() #increases speed
-        background.fill((255, 255, 255)) #needs to match color
+            background = pygame.Surface(screen.get_size()) #this is just making a surface because we have to do this uncool thing called blitting to make the text show
+            background = background.convert() #increases speed
 
-        #This sequence draws pacman onto the screen with the dimensions we gave earlier.
+           #End game (basic code structure from: http://www.pygame.org/docs/tut/tom/games2.html))
 
-        pygame.draw.circle(background,
-                           (255, 255, 0),
-                           (actual_pacman.x, actual_pacman.y),
-                           actual_pacman.radius)
+            background.fill((0, 0, 0)) #needs to match color
+            font = pygame.font.Font(None, 36)
+            text = font.render("END GAME! You earned " + str(model.point) + " Points", 1, (255,255,255)) #point.show(points_earned)
+            textpos = text.get_rect()
+            textpos.centerx = 250
+            textpos.centery = 250
+            background.blit(text, textpos)
+            screen.blit(background, (0, 0))
 
-        #This draws each point ball
 
-        pygame.draw.circle(background,
-                        first_ball.color,
-                        (first_ball.x,
-                        first_ball.y),
-                        first_ball.radius)
+        else:
+            self.screen.fill(pygame.Color('white'))
+            background = pygame.Surface(screen.get_size()) #this is just making a surface because we have to do this uncool thing called blitting to make the text show
+            background = background.convert() #increases speed
+            background.fill((255, 255, 255)) #needs to match color
 
-        pygame.draw.circle(background,
-                        second_ball.color,
-                        (second_ball.x,
-                        second_ball.y),
-                        second_ball.radius)
+           #This sequence draws pacman onto the screen with the dimensions we gave earlier.
 
-        pygame.draw.circle(background,
-                        third_ball.color,
-                        (third_ball.x,
-                        third_ball.y),
-                        third_ball.radius)
+            pygame.draw.circle(background,
+                                (255, 255, 0),
+                                (actual_pacman.x, actual_pacman.y),
+                                actual_pacman.radius)
+
+           #This draws a dot (we want several, though, right?)
+
+            pygame.draw.circle(background,
+                            first_ball.color,
+                            (first_ball.x,
+                            first_ball.y),
+                            first_ball.radius)
+
+            pygame.draw.circle(background, #kill screen use background
+                            second_ball.color,
+                            (second_ball.x,
+                            second_ball.y),
+                            second_ball.radius)
+
+            pygame.draw.circle(background,
+                            third_ball.color,
+                            (third_ball.x,
+                            third_ball.y),
+                            third_ball.radius)
 
         # Display some text #http://www.pygame.org/docs/tut/tom/games2.html
         font = pygame.font.Font(None, 36)
-        text = font.render(str(model.point), 1, (0, 0, 0))
+        text = font.render('Points: '+str(model.point), 1, (0, 0, 0))
         textpos = text.get_rect()
         textpos.centerx = WIDTH - 300
         background.blit(text, textpos)
         screen.blit(background, (0, 0))
+
+
+
+        font = pygame.font.Font(None, 36)
+        text = font.render("Timer: "+str(model.run_time()), 1, (0, 0, 0))
+        textpos = text.get_rect()
+        textpos.centerx = WIDTH -80
+        background.blit(text, textpos)
+        screen.blit(background, (0,0))
 
 
 
@@ -170,6 +209,8 @@ if __name__ == '__main__':
     """ Provides a view of the pacman model in a pygame window """
     # This part starts the display and loads the background. mostly based on floobits brickbreaker
     pygame.init()
+    pygame.time.Clock()
+    pygame.time.get_ticks()
     pygame.key.set_repeat(50, 50) #https://sivasantosh.wordpress.com/2012/07/18/keyboard-event-handling-pygame/
 
     screen = pygame.display.set_mode([WIDTH,HEIGHT])
