@@ -2,16 +2,24 @@ import pygame
 import time
 import random 
 
-bif = 'background_3.png'
-mif = 'arrow-small-right.png'
+#bif = 'background_3.png'
+#mif = 'arrow-small-right.png'
 
 WIDTH = 500
 HEIGHT = 500
-
+STEPSIZE = 10
 
 class model(object):
-    """This is he model that stores the game state """
+    """This is the model that stores the game state. It includes the objects such as the balls (points to be "eaten"),
+     and the pacman character that "eats" the balls. as attributes. This gets changed by the controller and drawn by the
+       viewer. "
+       Inputs: ball objects (3 of them), pacman object, and points
+       Makes a model object with these things (ball objects, pacman object, points) as attributes of the object. """
     def __init__ (self, ball, ball2, ball3, pacman, point):
+        """" Initialization for model attributes.
+        Inputs: ball objects (3 of them), pacman object, and points; creates a model object with these things
+        (ball objects, pacman object, points) as attributes of the object. """
+
         self.ball = ball
         self.ball2 = ball2
         self.ball3 = ball3
@@ -19,29 +27,29 @@ class model(object):
         self.point = point
 
     def update(self):
-        # self.ball = ball #sets the ball equal to the equation that defines it
-        # self.pacman = pacman #Defines the pacman by its equation.
-         #self.update(self.ball) #Updates each character each round (?)
-
-        # self.point = point
+        """  Updates each of the balls in relation to pacman each time the main game loop is run."""
         self.ball.update(self.pacman) #Updates each character each round (?)
         self.ball2.update(self.pacman)
         self.ball3.update(self.pacman)
 
 
 class pacman(object):
-    """ This is our pacman who dies from ghosts and eats balls!"""
+    """ This is our pacman who eats balls and scores points!"""
     def __init__(self, x, y, radius):
+        """Initialization for the attributes of pacman. Inputs: x position, y position, radius of pacman (all in pixels).
+        Creates a pacman!"""
         self.x = x #center coordinates/dimensions defining the pacman shape
         self.y = y
         self.radius = radius
 
 
 class ball (object):
-    """this is the ball that pacman eats and scores points by eating!"""
-    #POINTS_EARNED
+    """this is the ball that pacman eats, and scores points by eating!"""
+
 
     def __init__ (self, x, y, radius,color, value): #Another circle defining the
+        """Initialization for the attributes of the ball object. Inputs: x position, y position, radius (all in pixels),
+        color, and value (points scored for being eaten)"""
         self.x = x
         self.y = y
         self.radius = radius
@@ -49,39 +57,27 @@ class ball (object):
         self.value = value
 
     def update (self, pacman):
-
+        """ Checks to see if pacman is centered under the point - if he is, moves the ball to a new random location
+        """
         if self.x == pacman.x and self.y == pacman.y:
             self.x = random.choice(range(0, WIDTH, 10))
             self.y = random.choice(range(0, HEIGHT, 10))
-            #point.add_point(points_earned)
-            #global POINTS_EARNED
-            #POINTS_EARNED = POINTS_EARNED + int(self.value)
             model.point = model.point + int(self.value)
 
 
-#class point(object):
-#    """ this is what you earn when you collect the point rectangle :)"""
-#    def __init__ (self,number):
-#        self.number = number # Making an initial number.
-#        self.ball = ball
-#    def add_point(self):
-#        self.number = self.number + 1 #Adding to this
-#        #(and making a function out of it so we can use it later independently of the class.)
-#        return self.number # do I need to return this
-#    def show(self):
-#        point_string = str(self.number)
-#        return point_string
 
 class game_controller (object):
+    """
+    The controller takes pygame events and changes the model based on the nature of the event)
+    """
     def __init__(self,model):
-        self.model = model #Creating a model. (What's that? Just an overarching structure?)
+        """Adds the model object being used as a attribute of the controller so that things can actually be controlled"""
+        self.model = model
     def handle_event (self, event):
-        """ This is the controlled where user input (arrow keys or openCV) changes the model"""
+        """ This is the controlled where user input (arrow keys) changes the model"""
         # code in this section HEAVILY modified and extended from http://www.nerdparadise.com/tech/python/pygame/basics/part6/
         # also documentation here: http://www.pygame.org/docs/ref/key.html
-        #while True:
 
-        #for event in pygame.event.get():
 
         # determine if X was clicked, or Ctrl+W or Alt+F4 was used
         if event.type == pygame.QUIT:
@@ -95,26 +91,26 @@ class game_controller (object):
                 if model.pacman.y == 0:
                     model.pacman.y = model.pacman.y
                 else:
-                    model.pacman.y = model.pacman.y - 10 #For example, going up is going in a positive direction in the y axis (by 1 for 1 press of the key.)
+                    model.pacman.y = model.pacman.y - STEPSIZE #For example, going up is going in a positive direction in the y axis (by 1 for 1 press of the key.)
 
 
             if event.key == pygame.K_DOWN:
                 if model.pacman.y == HEIGHT:
                     model.pacman.y = model.pacman.y
                 else:
-                    model.pacman.y = model.pacman.y + 10
+                    model.pacman.y = model.pacman.y + STEPSIZE
 
             if event.key == pygame.K_LEFT:
                 if model.pacman.x == 0:
                     model.pacman.x = model.pacman.x
                 else:
-                    model.pacman.x = model.pacman.x - 10
+                    model.pacman.x = model.pacman.x - STEPSIZE
 
             if event.key == pygame.K_RIGHT:
                    if model.pacman.x == WIDTH:
                         model.pacman.x = model.pacman.x
                    else:
-                        model.pacman.x = model.pacman.x + 10
+                        model.pacman.x = model.pacman.x + STEPSIZE
 
 
 
@@ -127,8 +123,8 @@ class pygameview (object):
         #self.background = background
 
     def draw(self):
-        """ Draw the game to the pygame window """
-        # draw all the bricks to the screen
+        """ Draw the game objects (balls, point counter, pacman) on the pygame window. """
+
         self.screen.fill(pygame.Color('white'))
         background = pygame.Surface(screen.get_size()) #this is just making a surface because we have to do this uncool thing called blitting to make the text show
         background = background.convert() #increases speed
@@ -175,40 +171,29 @@ class pygameview (object):
 
 if __name__ == '__main__':
     """ Provides a view of the pacman model in a pygame window """
-    # This part starts the display and loads the background.
+    # This part starts the display and loads the background. mostly based on floobits brickbreaker
     pygame.init()
     pygame.key.set_repeat(50, 50) #https://sivasantosh.wordpress.com/2012/07/18/keyboard-event-handling-pygame/
-    # pygame.display.init()
 
-    screen = pygame.display.set_mode([WIDTH,HEIGHT]) #Starting the display using bif and mif
-    # background = pygame.image.load(bif).convert()
-    # mouse_c= pygame.image.load(mif).convert_alpha()
+    screen = pygame.display.set_mode([WIDTH,HEIGHT])
     first_ball = ball(50, 100,10, pygame.Color('blue'),5)
     second_ball = ball(300, 200, 15,pygame.Color('green'),10)
     third_ball =  ball(50, 200, 20,pygame.Color('red'),15)
     actual_pacman = pacman(60, 70, 50)
 
-    #model = model(ball(50, 100,10), ball2(300, 200, 15), ball3(50, 200, 20), pacman(60, 70, 50), point(0))
     model = model(first_ball,second_ball,third_ball,actual_pacman,0)
     view = pygameview(model, screen)
     controller = game_controller(model)
 
     # This part runs the code until it's closed. (QUIT is built in.)
+    # MAIN GAME LOOP
     running = True
     while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+        for event in pygame.event.get(): #get events
+            if event.type == pygame.QUIT: #find out if you're quitting, if not
                 running = False
             else:
-                controller.handle_event(event)
-        model.update()
-        view.draw() 
-        time.sleep(.001) #todo: initialize all locations of pacman, ball AND make something appropriate happen when pacman eats a ball
-
-    # def __init__(self, model, size):
-    #     """ Initialize with the specified model """
-    #     self.model = model
-    #     self.screen = pygame.display.set_mode(size)
-
-
-
+                controller.handle_event(event)  #handle the events (move objects in model from controller input)
+        model.update() #update the points and positions of the balls
+        view.draw()  #draw these changes
+        time.sleep(.001) # wait a tiny bit of time
