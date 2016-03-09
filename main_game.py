@@ -1,15 +1,15 @@
 import pygame
 import time
-import random 
+import random
+from timeit import default_timer as timer
 
-#bif = 'background_3.png'
-#mif = 'arrow-small-right.png'
+
 
 WIDTH = 500
 HEIGHT = 500
 STEPSIZE = 10
 
-class model(object):
+class Model(object):
     """This is the model that stores the game state. It includes the objects such as the balls (points to be "eaten"),
      and the pacman character that "eats" the balls. as attributes. This gets changed by the controller and drawn by the
        viewer. "
@@ -33,7 +33,7 @@ class model(object):
         self.ball3.update(self.pacman)
 
 
-class pacman(object):
+class Pacman(object):
     """ This is our pacman who eats balls and scores points!"""
     def __init__(self, x, y, radius):
         """Initialization for the attributes of pacman. Inputs: x position, y position, radius of pacman (all in pixels).
@@ -43,7 +43,7 @@ class pacman(object):
         self.radius = radius
 
 
-class ball (object):
+class Ball (object):
     """this is the ball that pacman eats, and scores points by eating!"""
 
 
@@ -66,7 +66,7 @@ class ball (object):
 
 
 
-class game_controller (object):
+class Game_Controller (object):
     """
     The controller takes pygame events and changes the model based on the nature of the event)
     """
@@ -114,13 +114,12 @@ class game_controller (object):
 
 
 
-class pygameview (object):
+class PyGameView (object):
     """ Provides a view of the pacman model in a pygame window """
     def __init__(self, model, screen):#background
         """ Initialize with the specified model """
         self.model = model # The model is a model.
         self.screen = screen #The display is equal to the function that define's it's results
-        #self.background = background
 
     def draw(self):
         """ Draw the game objects (balls, point counter, pacman) on the pygame window. """
@@ -167,7 +166,7 @@ class pygameview (object):
 
 
 
-        pygame.display.update()
+        pygame.display.update() #update what the player is looking at)
 
 if __name__ == '__main__':
     """ Provides a view of the pacman model in a pygame window """
@@ -176,14 +175,14 @@ if __name__ == '__main__':
     pygame.key.set_repeat(50, 50) #https://sivasantosh.wordpress.com/2012/07/18/keyboard-event-handling-pygame/
 
     screen = pygame.display.set_mode([WIDTH,HEIGHT])
-    first_ball = ball(50, 100,10, pygame.Color('blue'),5)
-    second_ball = ball(300, 200, 15,pygame.Color('green'),10)
-    third_ball =  ball(50, 200, 20,pygame.Color('red'),15)
-    actual_pacman = pacman(60, 70, 50)
+    first_ball = Ball(50, 100,10, pygame.Color('blue'),5)
+    second_ball = Ball(300, 200, 15,pygame.Color('green'),10)
+    third_ball =  Ball(50, 200, 20,pygame.Color('red'),15)
+    actual_pacman = Pacman(60, 70, 50)
 
-    model = model(first_ball,second_ball,third_ball,actual_pacman,0)
-    view = pygameview(model, screen)
-    controller = game_controller(model)
+    model = Model(first_ball,second_ball,third_ball,actual_pacman,0)
+    view = PyGameView(model, screen)
+    controller = Game_Controller(model)
 
     # This part runs the code until it's closed. (QUIT is built in.)
     # MAIN GAME LOOP
