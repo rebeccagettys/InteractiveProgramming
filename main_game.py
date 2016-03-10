@@ -188,10 +188,17 @@ class PyGameView (object):
         font = pygame.font.Font(None, 36)
         text = font.render('Points: '+str(model.point), 1, (0, 0, 0))
         textpos = text.get_rect()
-        textpos.centerx = WIDTH - 300
+        textpos.centerx = WIDTH - 200
         background.blit(text, textpos)
         screen.blit(background, (0, 0))
 
+        font = pygame.font.Font(None, 36)
+        text = font.render("POLKA DOTS!", 1, (0, 0, 0))
+        textpos = text.get_rect()
+        textpos.centerx = 100
+        textpos.centery = HEIGHT - 50
+        background.blit(text, textpos)
+        screen.blit(background, (0,0))
 
 
         font = pygame.font.Font(None, 36)
